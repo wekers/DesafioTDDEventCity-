@@ -1,0 +1,32 @@
+name: Daily.. Commit
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # Executa todos os dias às 08:00 UTC (05:00 Brasil -03:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write  # <-- PERMISSÃO ESSENCIAL PARA FAZER PUSH
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set timezone
+        run: sudo timedatectl set-timezone America/Sao_Paulo
+
+      - name: Generate beat file
+        run: |
+          echo "Última execução: $(date '+%Y-%m-%d %H:%M:%S %Z')" > initbeat.txt
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "Fernando Gilli (github-actions)"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add initbeat.txt
+          git commit -m "Beat automático - $(date '+%Y-%m-%d %H:%M:%S %Z')" || echo "Nenhuma alteração"
+          git push
