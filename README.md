@@ -53,3 +53,4 @@ Arquivo Postman: [Aqui](https://github.com/wekers/DesafioTDDEventCity-/blob/main
 - Tratamento de exceções em API com respostas HTTP customizadas
 
 
+<!-- Updated: Fri Nov 28 20:38:52 UTC 2025 -->
